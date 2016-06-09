@@ -15,21 +15,31 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.Hashtable;
+
 public class MainActivity extends AppCompatActivity implements OnClickListener{
 
     private Button scanBtn;
     private TextView formatTxt, contentTxt;
+    Hashtable<String, String> dicionarioVideos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        populateTable();
+
         scanBtn    = (Button)findViewById(R.id.scan_button);
         formatTxt  = (TextView)findViewById(R.id.scan_format);
         contentTxt = (TextView)findViewById(R.id.scan_content);
 
         scanBtn.setOnClickListener(this);
+    }
+
+    private void populateTable(){
+        dicionarioVideos = new Hashtable<String,String>();
+        dicionarioVideos.put("vcvaicomo","vcvaicomo.gif");
     }
 
     @Override
@@ -55,15 +65,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
 
-            Intent i= new Intent(this,VideoRoot.class);
-            i.putExtra("qrLido",scanContent);
-            startActivity(i);
+            String nomeVideo = dicionarioVideos.get(scanContent);
 
-            //formatTxt.setText("FORMAT: " + scanFormat);
-            //contentTxt.setText("CONTENT: " + scanContent);
+            if( nomeVideo != null){
+                Intent i= new Intent(this,VideoRoot.class);
+                i.putExtra("nomeVideo",nomeVideo);
+                startActivity(i);
+            }else{
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Código inválido, certifique-se que está utilizando um código válido.", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
         }else{
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "Erro ao ler código.", Toast.LENGTH_SHORT);
+                    "Erro ao ler código.", Toast.LENGTH_LONG);
             toast.show();
         }
     }

@@ -19,20 +19,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="92dp" />
 
-    <TextView
+    <WebView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/dicionario"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/gifHolder"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp" />
-
-    <VideoView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/videoLibras"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="10dp" />
 </RelativeLayout>
