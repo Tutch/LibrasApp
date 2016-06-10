@@ -1,26 +1,31 @@
 package com.example.johndoe.demoqr;
 
-import android.support.v7.app.AlertDialog;
+//import android.graphics.drawable.ColorDrawable;
+//import android.support.annotation.ColorInt;
+//import android.support.v7.app.ActionBar;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import android.app.Activity;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener{
 
-    private Button scanBtn;
-    private TextView formatTxt, contentTxt;
+    private Button scanBtn, alfaBtn;
+    private EditText alfaText;
     Hashtable<String, String> dicionarioVideos;
 
     @Override
@@ -31,10 +36,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         populateTable();
 
         scanBtn    = (Button)findViewById(R.id.scan_button);
-        formatTxt  = (TextView)findViewById(R.id.scan_format);
-        contentTxt = (TextView)findViewById(R.id.scan_content);
+        alfaBtn    = (Button)findViewById(R.id.alfa_button);
+        alfaText   = (EditText) findViewById(R.id.alfa_text);
 
         scanBtn.setOnClickListener(this);
+        alfaBtn.setOnClickListener(this);
+
+        // http://stackoverflow.com/questions/8225245/enable-and-disable-button-according-to-the-text-in-edittext-in-android
+        alfaText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                boolean isReady = alfaText.getText().toString().length()>0;
+                alfaBtn.setEnabled(isReady);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
     }
 
     private void populateTable(){
@@ -42,17 +65,46 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         dicionarioVideos.put("vcvaicomo","vcvaicomo.gif");
     }
 
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
     @Override
     public void onClick(View v){
-        if(v.getId() == R.id.scan_button){
+        switch(v.getId()) {
             //scan
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            android.app.AlertDialog prompt = scanIntegrator.initiateScan();
-            if(prompt != null) {
-                prompt.setTitle("Download necessário");
-                prompt.setMessage("Para ler os códigos do livreto é necessário a instalação do Barcode Scanner. Gostaria de fazer o download do aplicativo?");
+            case R.id.scan_button: {
+                IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+                android.app.AlertDialog prompt = scanIntegrator.initiateScan();
+                if (prompt != null) {
+                    prompt.setTitle("Download necessário");
+                    prompt.setMessage("Para ler os códigos do livreto é necessário a instalação do Barcode Scanner. Gostaria de fazer o download do aplicativo?");
+                }
+                scanIntegrator.addExtra("SCAN_MODE", "QR_CODE_MODE");
+                break;
             }
-            scanIntegrator.addExtra("SCAN_MODE","QR_CODE_MODE");
+
+            //alfanumerico
+            case R.id.alfa_button: {
+                if(!alfaText.getText().toString().matches("")){
+                    String nomeVideo = dicionarioVideos.get(alfaText.getText().toString());
+                    if( nomeVideo != null){
+                        Intent i= new Intent(this,VideoRoot.class);
+                        i.putExtra("nomeVideo",nomeVideo);
+                        startActivity(i);
+                    }else{
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                getApplicationContext().getString(R.string.erroCodigoInvalido) , Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -60,27 +112,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         //retrieve scan result
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-        if ((scanningResult != null) && (scanningResult.getFormatName().equals("QR_CODE"))){
-            //we have a result
-            String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
+        System.out.println(scanningResult.getFormatName());
 
-            String nomeVideo = dicionarioVideos.get(scanContent);
 
-            if( nomeVideo != null){
-                Intent i= new Intent(this,VideoRoot.class);
-                i.putExtra("nomeVideo",nomeVideo);
-                startActivity(i);
+        if(scanningResult.getFormatName() != null){
+            if (scanningResult.getFormatName().equals("QR_CODE")){
+                //we have a result
+                String scanContent = scanningResult.getContents();
+                //String scanFormat = scanningResult.getFormatName();
+
+                String nomeVideo = dicionarioVideos.get(scanContent);
+
+                if( nomeVideo != null){
+                    Intent i= new Intent(this,VideoRoot.class);
+                    i.putExtra("nomeVideo",nomeVideo);
+                    startActivity(i);
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getApplicationContext().getString(R.string.erroCodigoInvalido) , Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
             }else{
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Código inválido, certifique-se que está utilizando um código válido.", Toast.LENGTH_SHORT);
+                        getApplicationContext().getString(R.string.erroCodigoLeitura), Toast.LENGTH_LONG);
                 toast.show();
             }
-
-        }else{
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Erro ao ler código.", Toast.LENGTH_LONG);
-            toast.show();
         }
     }
 }

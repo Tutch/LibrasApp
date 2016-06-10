@@ -36,7 +36,7 @@ public class VideoRoot extends AppCompatActivity {
         if (extras != null)
         {
             String value = extras.getString("nomeVideo");
-            receivedInfo.setText(value);
+            receivedInfo.setText(value.substring(0,value.length()-4));
 
             gifHolder.loadUrl("file:///android_res/raw/" + value);
             gifHolder.setPadding(0, 0, 0, 0);
