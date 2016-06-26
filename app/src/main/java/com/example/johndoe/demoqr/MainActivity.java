@@ -1,9 +1,5 @@
 package com.example.johndoe.demoqr;
 
-//import android.graphics.drawable.ColorDrawable;
-//import android.support.annotation.ColorInt;
-//import android.support.v7.app.ActionBar;
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -26,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
     private Button scanBtn, alfaBtn;
     private EditText alfaText;
-    Hashtable<String, String> dicionarioVideos;
+    Hashtable<String, RegistroVideo> dicionarioVideos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +57,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     }
 
     private void populateTable(){
-        dicionarioVideos = new Hashtable<String,String>();
-        dicionarioVideos.put("vcvaicomo","vcvaicomo.gif");
+        dicionarioVideos = new Hashtable<String, RegistroVideo>();
+        dicionarioVideos.put("vcvaicomo",new RegistroVideo("vcvaicomo.gif","Como você vai?"));
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,10 +86,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             //alfanumerico
             case R.id.alfa_button: {
                 if(!alfaText.getText().toString().matches("")){
-                    String nomeVideo = dicionarioVideos.get(alfaText.getText().toString());
-                    if( nomeVideo != null){
+                    RegistroVideo registro = dicionarioVideos.get(alfaText.getText().toString());
+
+                    if( registro != null){
                         Intent i= new Intent(this,VideoRoot.class);
-                        i.putExtra("nomeVideo",nomeVideo);
+                        i.putExtra("nomeVideo",registro.nomeArquivo);
+                        i.putExtra("nomeApresentacao",registro.nomeApresentacao);
                         startActivity(i);
                     }else{
                         Toast toast = Toast.makeText(getApplicationContext(),
@@ -119,13 +115,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             if (scanningResult.getFormatName().equals("QR_CODE")){
                 //we have a result
                 String scanContent = scanningResult.getContents();
-                //String scanFormat = scanningResult.getFormatName();
+                RegistroVideo registro = dicionarioVideos.get(scanContent);
 
-                String nomeVideo = dicionarioVideos.get(scanContent);
-
-                if( nomeVideo != null){
+                if( registro != null){
                     Intent i= new Intent(this,VideoRoot.class);
-                    i.putExtra("nomeVideo",nomeVideo);
+                    i.putExtra("nomeVideo",registro.nomeArquivo);
+                    i.putExtra("nomeApresentacao",registro.nomeApresentacao);
                     startActivity(i);
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(),
