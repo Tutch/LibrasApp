@@ -1,74 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:textAlignment="center"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:columnCount="6"
+    android:alignmentMode="alignBounds"
+    android:useDefaultMargins="false">
 
-    <Button android:id="@+id/scan_button"
+
+        <ImageView
+            android:layout_width="192dp"
+            android:layout_height="142dp"
+            android:src="@drawable/logo_inapp"
+            android:id="@+id/imageView"
+            android:layout_marginRight="27dp"
+            android:layout_marginEnd="27dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="Logo do Aplicativo - Projeto Libras no Bolso"
+            android:cropToPadding="false" />
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ler QR Code"
-        android:layout_marginTop="40dp"
-        android:textSize="20dp"
-        android:padding="20dp"
-        android:layout_below="@+id/qr_ins"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/qr_ins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="false"
-        android:text="@string/scan_qr_ins"
-        android:textColor="@color/textColor"
-        android:layout_marginTop="62dp"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/imageView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp"
+        android:id="@+id/relativeLayout">
 
-    <TextView
-        android:id="@+id/alfa_ins"
+        <Button
+            android:fontFamily="sans-serif-light"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Leitor"
+            android:id="@+id/scan_button"
+            android:layout_gravity="bottom"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAllCaps="false"
+
+            android:textSize="24sp"
+            android:layout_centerVertical="true"
+            android:gravity="start"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:layout_marginRight="52dp"
+            android:layout_marginEnd="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+        <View
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:background="@drawable/rectangle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/scan_button"
+            android:layout_toLeftOf="@+id/scan_button"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textIsSelectable="false"
-        android:text= "@string/scan_alfa_ins"
-        android:textColor="@color/textColor"
-        android:layout_below="@+id/scan_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:textSize="16sp" />
+        android:id="@+id/relativeLayout2"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/alfa_text"
-        android:layout_below="@+id/alfa_ins"
-        android:layout_marginTop="16dp"
-        android:height="34dp"
-        android:layout_alignLeft="@+id/alfa_ins"
-        android:layout_alignStart="@+id/alfa_ins"
-        android:layout_alignRight="@+id/alfa_ins"
-        android:layout_alignEnd="@+id/alfa_ins"
-        android:background="@color/textColor"
-        android:textSize="26sp"
-        android:gravity="center_vertical|center_horizontal" />
+        <Button
+            android:fontFamily="sans-serif-light"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Código"
+            android:id="@+id/alfa_button"
+            android:layout_gravity="bottom"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAllCaps="false"
 
-    <Button
-        android:id="@+id/alfa_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Procurar por código"
-        android:layout_marginTop="18dp"
-        android:layout_below="@+id/alfa_text"
-        android:layout_centerHorizontal="true"
-        android:textSize="14dp"
-        android:enabled="false" />
+            android:textSize="24sp"
+            android:layout_centerVertical="true"
+            android:gravity="start"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:layout_marginRight="52dp"
+            android:layout_marginEnd="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
 
+        <View
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:background="@drawable/rectangle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/alfa_button"
+            android:layout_toLeftOf="@+id/alfa_button"/>
+    </RelativeLayout>
 
 </RelativeLayout>

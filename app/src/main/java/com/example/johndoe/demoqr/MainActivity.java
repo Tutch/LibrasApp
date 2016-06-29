@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         populateTable();
 
         scanBtn    = (Button)findViewById(R.id.scan_button);
-        alfaBtn    = (Button)findViewById(R.id.alfa_button);
-        alfaText   = (EditText) findViewById(R.id.alfa_text);
+        //alfaBtn    = (Button)findViewById(R.id.alfa_button);
+        //alfaText   = (EditText) findViewById(R.id.alfa_text);
 
         scanBtn.setOnClickListener(this);
-        alfaBtn.setOnClickListener(this);
+        //alfaBtn.setOnClickListener(this);
 
         // http://stackoverflow.com/questions/8225245/enable-and-disable-button-according-to-the-text-in-edittext-in-android
-        alfaText.addTextChangedListener(new TextWatcher() {
+       /* alfaText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
                 boolean isReady = alfaText.getText().toString().length()>0;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
-        });
+        });*/
     }
 
     private void populateTable(){
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             }
 
             //alfanumerico
-            case R.id.alfa_button: {
+            /*case R.id.alfa_button: {
                 if(!alfaText.getText().toString().matches("")){
                     RegistroVideo registro = dicionarioVideos.get(alfaText.getText().toString());
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                     }
                 }
                 break;
-            }
+            }*/
         }
     }
 

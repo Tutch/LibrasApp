@@ -19,16 +19,14 @@ import java.util.Hashtable;
 public class VideoRoot extends AppCompatActivity {
 
     private WebView gifHolder;
-    private TextView receivedInfo;
-    VideoView videoLibras;
-    private ProgressDialog progressDialog;
+    private TextView presentationName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_root);
 
-        receivedInfo  = (TextView)findViewById(R.id.receivedInfo);
+        presentationName  = (TextView)findViewById(R.id.receivedInfo);
         //videoLibras = (VideoView)findViewById(R.id.videoLibras);
         gifHolder = (WebView)findViewById(R.id.gifHolder);
 
@@ -37,7 +35,7 @@ public class VideoRoot extends AppCompatActivity {
         {
             String value = extras.getString("nomeVideo");
 
-            receivedInfo.setText(extras.getString("nomeApresentacao"));
+            presentationName.setText(extras.getString("nomeApresentacao"));
 
             gifHolder.loadUrl("file:///android_res/raw/" + value);
             gifHolder.setPadding(0, 0, 0, 0);

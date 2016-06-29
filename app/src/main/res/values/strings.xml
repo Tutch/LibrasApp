@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Aplicativo Libras</string>
+    <string name="app_name">Libras no Bolso</string>
     <string name="scan_qr_ins">Toque para escanear o código da página</string>
     <string name="scan_alfa_ins">ou insira aqui o código alfanumérico</string>
     <string name="erroCodigoInvalido">Código inválido, certifique-se que está utilizando um código válido.</string>
