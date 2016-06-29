@@ -11,6 +11,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,8 +25,9 @@ import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener{
 
-    private Button scanBtn, alfaBtn;
-    private EditText alfaText;
+    private Button scanBtn, sobreBtn, codigoBtn, alfaBtn;
+    private EditText codigoInput;
+    private View codigoView;
     Hashtable<String, RegistroVideo> dicionarioVideos;
 
     @Override
@@ -32,18 +38,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         populateTable();
 
         scanBtn    = (Button)findViewById(R.id.scan_button);
-        //alfaBtn    = (Button)findViewById(R.id.alfa_button);
-        //alfaText   = (EditText) findViewById(R.id.alfa_text);
+        sobreBtn   = (Button)findViewById(R.id.sobre_button);
+        codigoBtn    = (Button)findViewById(R.id.alfa_button);
+
+        codigoView = (View)findViewById(R.id.codigoView);
+        codigoInput = (EditText)findViewById(R.id.codigoInput);
 
         scanBtn.setOnClickListener(this);
+        sobreBtn.setOnClickListener(this);
+        codigoBtn.setOnClickListener(this);
         //alfaBtn.setOnClickListener(this);
 
         // http://stackoverflow.com/questions/8225245/enable-and-disable-button-according-to-the-text-in-edittext-in-android
-       /* alfaText.addTextChangedListener(new TextWatcher() {
+        codigoInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                boolean isReady = alfaText.getText().toString().length()>0;
-                alfaBtn.setEnabled(isReady);
+                boolean isReady = codigoInput.getText().toString().length()>0;
+                codigoBtn.setEnabled(isReady);
             }
 
             @Override
@@ -53,24 +64,34 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
-        });*/
+        });
     }
 
     private void populateTable(){
         dicionarioVideos = new Hashtable<String, RegistroVideo>();
-        dicionarioVideos.put("vcvaicomo",new RegistroVideo("vcvaicomo.gif","Como você vai?"));
+
+        dicionarioVideos.put("ATRASADO",new RegistroVideo("atrasado.gif","atrasado"));
+        dicionarioVideos.put("BAIRRO",new RegistroVideo("bairro.gif","bairro"));
+        dicionarioVideos.put("BARATO",new RegistroVideo("barato.gif","barato"));
+        dicionarioVideos.put("BICICLETA",new RegistroVideo("bicicleta.gif","bicicleta"));
+        dicionarioVideos.put("CIDADE",new RegistroVideo("cidade.gif","cidade"));
+        dicionarioVideos.put("CARRO",new RegistroVideo("carro.gif","carro"));
+        dicionarioVideos.put("ENGARRAFAMENTO",new RegistroVideo("engarrafamento.gif","engarrafamento"));
+        dicionarioVideos.put("ESPERAR",new RegistroVideo("esperar.gif","esperar"));
+        dicionarioVideos.put("EUPREFIRO",new RegistroVideo("euprefiro.gif","eu prefiro"));
+        dicionarioVideos.put("EUQUERO",new RegistroVideo("euquero.gif","eu quero"));
+        dicionarioVideos.put("MOTORISTA",new RegistroVideo("motorista.gif","motorista"));
+        dicionarioVideos.put("NAOPODE",new RegistroVideo("naopode.gif","não pode"));
+        dicionarioVideos.put("ONDE",new RegistroVideo("onde.gif","onde"));
+        dicionarioVideos.put("ONIBUS",new RegistroVideo("onibus.gif","ônibus"));
+        dicionarioVideos.put("PASSEAR",new RegistroVideo("passear.gif","passear"));
+        dicionarioVideos.put("RAPIDO",new RegistroVideo("rapido.gif","rápido"));
+        dicionarioVideos.put("ONIBUSPONTO",new RegistroVideo("pontodebus.gif","ponto de ônibus"));
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public void onClick(View v){
-        switch(v.getId()) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             //scan
             case R.id.scan_button: {
                 IntentIntegrator scanIntegrator = new IntentIntegrator(this);
@@ -83,25 +104,65 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                 break;
             }
 
-            //alfanumerico
-            /*case R.id.alfa_button: {
-                if(!alfaText.getText().toString().matches("")){
-                    RegistroVideo registro = dicionarioVideos.get(alfaText.getText().toString());
-
-                    if( registro != null){
-                        Intent i= new Intent(this,VideoRoot.class);
-                        i.putExtra("nomeVideo",registro.nomeArquivo);
-                        i.putExtra("nomeApresentacao",registro.nomeApresentacao);
-                        startActivity(i);
-                    }else{
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                getApplicationContext().getString(R.string.erroCodigoInvalido) , Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                }
+            case R.id.sobre_button: {
+                Intent intent = new Intent(this, SobreActivity.class);
+                startActivity(intent);
                 break;
-            }*/
+            }
+
+            case R.id.alfa_button: {
+                if (!codigoBtn.getText().equals("Inserir")) {
+                    animacaoEntradaInputCodigo();
+                    codigoBtn.setText("Inserir");
+                    codigoBtn.setEnabled(false);
+                } else {
+                    if (!codigoInput.getText().toString().matches("")) {
+                        RegistroVideo registro = dicionarioVideos.get(codigoInput.getText().toString().toUpperCase());
+
+                        if (registro != null) {
+                            Intent i = new Intent(this, VideoRoot.class);
+                            i.putExtra("nomeVideo", registro.nomeArquivo);
+                            i.putExtra("nomeApresentacao", registro.nomeApresentacao);
+                            startActivity(i);
+                        } else {
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    getApplicationContext().getString(R.string.erroCodigoInvalido), Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                    break;
+                }
+            }
         }
+    }
+
+    // http://stackoverflow.com/questions/6796139/fade-in-fade-out-android-animation-in-java/6822116#6822116
+    public void animacaoEntradaInputCodigo(){
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator()); //and this
+        fadeOut.setStartOffset(100);
+        fadeOut.setDuration(500);
+
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setStartOffset(500);
+        fadeIn.setDuration(1000);
+
+        AnimationSet animation = new AnimationSet(false); //change to false
+        AnimationSet animation2 = new AnimationSet(false); //change to false
+
+        animation.addAnimation(fadeOut);
+        animation2.addAnimation(fadeIn);
+
+        codigoView.setAnimation(animation);
+        codigoBtn.setAnimation(animation);
+
+        codigoInput.setAnimation(animation2);
+        codigoBtn.setAnimation(animation2);
+
+
+        codigoView.setVisibility(View.INVISIBLE);
+        codigoInput.setVisibility(View.VISIBLE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

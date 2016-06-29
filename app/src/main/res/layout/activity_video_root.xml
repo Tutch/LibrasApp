@@ -13,14 +13,14 @@
         android:id="@+id/relativeLayout3">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="210dp"
             android:layout_height="52dp"
-            android:text="VOCÁBULO"
+            android:text="@string/vocabularioTitulo"
             android:id="@+id/textView"
             android:textColor="@color/colorWhite"
             android:paddingLeft="12dp"
+            android:paddingStart="12dp"
             android:paddingTop="12dp"
-            android:paddingRight="60dp"
             android:background="@color/colorPrimary"
             android:paddingBottom="12dp"
             android:layout_alignParentRight="true"
@@ -34,37 +34,39 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/textView"
             android:layout_toStartOf="@+id/textView"
-            android:layout_marginRight="60dp"
-            android:layout_marginEnd="60dp" />
+            android:layout_marginRight="50dp"
+            android:layout_marginEnd="50dp" />
     </RelativeLayout>
 
     <WebView
         android:layout_width="wrap_content"
-        android:layout_height="310dp"
+        android:layout_height="240dp"
         android:id="@+id/gifHolder"
         android:layout_above="@+id/view"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="26dp" />
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="10dp"
         android:background="@drawable/rectangle"
+        android:layout_marginBottom="28dp"
+        android:id="@+id/view"
         android:layout_above="@+id/receivedInfo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
-        android:id="@+id/view" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="você vai como?"
         android:id="@+id/receivedInfo"
         android:textSize="20sp"
         android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="70dp"
+        android:text="atrasado"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp" />
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

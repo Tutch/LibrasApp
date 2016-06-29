@@ -8,7 +8,6 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:columnCount="6"
-    android:alignmentMode="alignBounds"
     android:useDefaultMargins="false">
 
 
@@ -32,7 +31,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="36dp"
-        android:id="@+id/relativeLayout">
+        android:id="@+id/scanLayout">
 
         <Button
             android:fontFamily="sans-serif-light"
@@ -70,8 +69,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout2"
-        android:layout_below="@+id/relativeLayout"
+        android:id="@+id/codigoLayout"
+        android:layout_below="@+id/scanLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
@@ -101,11 +100,117 @@
             android:layout_width="240dp"
             android:layout_height="30dp"
             android:background="@drawable/rectangle"
+            android:id="@+id/codigoView"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/alfa_button"
             android:layout_toLeftOf="@+id/alfa_button"/>
+
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:id="@+id/codigoInput"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/input"
+            android:textSize="18sp"
+            android:gravity="fill_vertical|end"
+            android:visibility="invisible"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/alfa_button"
+            android:layout_toStartOf="@+id/alfa_button"
+            android:text=""
+            android:paddingRight="6dp"
+            android:paddingLeft="6dp"
+            android:paddingEnd="6dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginStart="-2dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/indiceLayout"
+        android:layout_below="@+id/codigoLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:fontFamily="sans-serif-light"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Índice"
+            android:id="@+id/indice_button"
+            android:layout_gravity="bottom"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAllCaps="false"
+
+            android:textSize="24sp"
+            android:layout_centerVertical="true"
+            android:gravity="start"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:layout_marginRight="52dp"
+            android:layout_marginEnd="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+        <View
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:background="@drawable/rectangle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/indice_button"
+            android:layout_toLeftOf="@+id/indice_button"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sobreLayout"
+        android:layout_below="@+id/indiceLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:fontFamily="sans-serif-light"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Sobre"
+            android:id="@+id/sobre_button"
+            android:layout_gravity="bottom"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAllCaps="false"
+
+            android:textSize="24sp"
+            android:layout_centerVertical="true"
+            android:gravity="start"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:layout_marginRight="52dp"
+            android:layout_marginEnd="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+        <View
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:background="@drawable/rectangle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/sobre_button"
+            android:layout_toLeftOf="@+id/sobre_button"/>
     </RelativeLayout>
 
 </RelativeLayout>
