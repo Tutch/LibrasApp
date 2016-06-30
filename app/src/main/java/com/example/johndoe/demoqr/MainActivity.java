@@ -37,17 +37,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
         populateTable();
 
-        scanBtn    = (Button)findViewById(R.id.scan_button);
-        sobreBtn   = (Button)findViewById(R.id.sobre_button);
+        scanBtn      = (Button)findViewById(R.id.scan_button);
+        sobreBtn     = (Button)findViewById(R.id.sobre_button);
         codigoBtn    = (Button)findViewById(R.id.alfa_button);
 
-        codigoView = (View)findViewById(R.id.codigoView);
-        codigoInput = (EditText)findViewById(R.id.codigoInput);
+        codigoView   = findViewById(R.id.codigoView);
+        codigoInput  = (EditText)findViewById(R.id.codigoInput);
 
         scanBtn.setOnClickListener(this);
         sobreBtn.setOnClickListener(this);
         codigoBtn.setOnClickListener(this);
-        //alfaBtn.setOnClickListener(this);
+        codigoBtn.setEnabled(true);
 
         // http://stackoverflow.com/questions/8225245/enable-and-disable-button-according-to-the-text-in-edittext-in-android
         codigoInput.addTextChangedListener(new TextWatcher() {
@@ -65,6 +65,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+      //  codigoBtn.setEnabled(true);
+
     }
 
     private void populateTable(){
