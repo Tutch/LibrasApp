@@ -4,6 +4,6 @@ registrado no aplicativo, mostra um GIF com uma animação correspondente em LIB
 
 A interface do aplicativo é obra do Átila Oliveira: https://www.behance.net/atilahunico
 
-*Read this in other languages: [English](README-EN.md)
+*Read this in other languages: [English](README-EN)
 
 
